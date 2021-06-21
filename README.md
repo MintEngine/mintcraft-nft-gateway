@@ -1,2 +1,3 @@
-# mintcraft-nft-server
-NFT publishing and metadata server for Mintcraft
+# Mintcraft NFT Server
+
+NFT metadata building and ipfs publishing server for Mintcraft
