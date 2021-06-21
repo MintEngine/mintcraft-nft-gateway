@@ -1,0 +1,14 @@
+{
+  "name": "mintcraft-nft-server",
+  "version": "0.1.0",
+  "description": "Mintcraft NFT Server",
+  "main": "index.js",
+  "repository": "git@github.com:MintEngine/mintcraft-nft-server.git",
+  "author": "Tang Bo Hao <tech@btang.cn>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@polkadot/api": "^4.15.1",
+    "@polkadot/api-contract": "^4.15.1",
+    "koa": "^2.13.1"
+  }
+}
