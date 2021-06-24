@@ -1,6 +1,6 @@
-# Mintcraft NFT Server
+# Mintcraft NFT Gateway
 
-NFT metadata building and ipfs publishing server for Mintcraft
+This is a multi-chain general NFT minting and publishing gateway.
 
 ## Install
 
