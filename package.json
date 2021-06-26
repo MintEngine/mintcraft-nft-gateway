@@ -1,14 +1,36 @@
 {
-  "name": "mintcraft-nft-server",
+  "name": "mintcraft-nft-gateway",
   "version": "0.1.0",
   "description": "Mintcraft NFT Server",
   "main": "index.js",
-  "repository": "git@github.com:MintEngine/mintcraft-nft-server.git",
+  "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
   "author": "Tang Bo Hao <tech@btang.cn>",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 14.0"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "gulp",
+    "serve": "node dist/index.js"
+  },
   "dependencies": {
     "@polkadot/api": "^4.15.1",
-    "@polkadot/api-contract": "^4.15.1",
-    "koa": "^2.13.1"
+    "@polkadot/api-contract": "^4.15.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "4",
+    "@typescript-eslint/parser": "^4.28.0",
+    "del": "^6.0.0",
+    "eslint": "7",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-node": "11",
+    "eslint-plugin-promise": "4",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "supports-color": "^9.0.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
   }
 }
