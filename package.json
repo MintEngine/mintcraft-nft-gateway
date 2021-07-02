@@ -1,6 +1,6 @@
 {
   "name": "mintcraft-nft-gateway",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Mintcraft NFT Gateway",
   "main": "index.js",
   "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
@@ -15,9 +15,19 @@
     "serve": "node dist/index.js"
   },
   "dependencies": {
-    "@jadepool/logger": "^2.0.2"
+    "@jadepool/consts": "^1.0.0-alpha.0",
+    "@jadepool/instance": "^1.0.0-alpha.9",
+    "@jadepool/logger": "^2.0.3",
+    "@jadepool/service-consul": "^1.0.0-alpha.3",
+    "@jadepool/service-http": "^1.0.0-alpha.4",
+    "@jadepool/service-socketio": "^1.0.0-alpha.2",
+    "config": "^3.3.6",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/config": "^0.0.38",
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^15.14.0",
     "@typescript-eslint/eslint-plugin": "4",
     "@typescript-eslint/parser": "^4.28.0",
     "del": "^6.0.0",
