@@ -85,6 +85,8 @@ function buildMethodInvoker (methodName: string, methodNsp?: string | Function, 
     let namespace: string | null
     switch (methodNsp) {
       case types.METHOD_NAMESPACE.NULL:
+      case null:
+      case undefined:
         namespace = null
         break
       case types.METHOD_NAMESPACE.BLOCKCHAIN:

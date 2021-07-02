@@ -9,7 +9,7 @@ const logger = Logger.of('Methods', 'Storage IPFS')
  * @param args 参数名
  * @param ws 调用该方法的socketClient
  */
-export default async (methodName: string, namespace: string | undefined, args: object = {}): Promise<any> => {
+export default async (methodName: string, namespace: string, args: object = {}): Promise<any> => {
   const formatedMethodName = _.kebabCase(methodName)
 
   const callMethodKey = `${formatedMethodName}${typeof namespace === 'string' ? `(${namespace})` : ''}`
