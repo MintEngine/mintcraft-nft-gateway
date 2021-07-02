@@ -63,6 +63,17 @@
     "@jadepool/consts" "^1.0.0-alpha.0"
     lodash "^4.17.21"
 
+"@jadepool/instance@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@jadepool/instance/-/instance-1.0.0-alpha.10.tgz#ffae09783611303cdee98560400b3354ef60b783"
+  integrity sha512-N0A4ugAeDbSIZ4uD58+EuP3IbwwdaJk/a2uCw3a0jgiY3ITE5v9wnIbULmsEhaQgx9fxgAE2fonRss4Qnkuf9w==
+  dependencies:
+    "@jadepool/env" "^1.0.0-alpha.0"
+    "@jadepool/logger" "^2.0.3"
+    "@jadepool/types" "^1.0.0-alpha.2"
+    lodash "^4.17.21"
+    require-fool-webpack "^2.0.0"
+
 "@jadepool/instance@^1.0.0-alpha.9":
   version "1.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/@jadepool/instance/-/instance-1.0.0-alpha.9.tgz#be5210db3ec296e9ec00d12afb96cd825ebc598f"
