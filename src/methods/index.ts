@@ -4,6 +4,7 @@ import { SocketIOService } from '@jadepool/service-socketio'
 import jadepool from '@jadepool/instance'
 import consts from '@jadepool/consts'
 import Logger from '@jadepool/logger'
+import { ParsedArgs } from '../routes/factory'
 
 const logger = Logger.of('Methods')
 
@@ -12,7 +13,7 @@ const logger = Logger.of('Methods')
  * @param args 参数名
  * @param ws 调用该方法的socketClient
  */
-export default async (methodName: string, namespace: string | undefined, args: object = {}): Promise<any> => {
+export default async (methodName: string, namespace: string | undefined, args: ParsedArgs): Promise<any> => {
   const formatedMethodName = _.kebabCase(methodName)
   // socket io service
   const sioSrv = jadepool.getService(consts.SERVICE_NAMES.SOCKET_IO) as SocketIOService
