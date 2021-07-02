@@ -3,7 +3,7 @@ import jadepool from '@jadepool/instance'
 // import * as consts from '@jadepool/consts'
 import Context from './context'
 
-const logger = Logger.of('Mintcraft', 'NFT gateway')
+const logger = Logger.of('Mintcraft', 'Storage IPFS')
 
 async function run (): Promise<void> {
   await jadepool.initialize(new Context())
