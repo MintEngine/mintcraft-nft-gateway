@@ -10,7 +10,7 @@ const logger = Logger.of('Mintcraft', 'Context')
 class Context extends jadepool.Context {
   constructor () {
     super(
-      'NFT-gateway',
+      process.env.npm_package_name ?? 'nft-gateway',
       process.env.npm_package_version ?? process.env.version ?? process.env.VERSION ?? '0.1.0',
       methedFunc,
       config
