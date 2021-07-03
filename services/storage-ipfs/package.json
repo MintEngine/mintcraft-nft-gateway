@@ -13,5 +13,9 @@
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.0",
+    "ts-node": "^10.0.0"
   }
 }
