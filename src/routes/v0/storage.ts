@@ -18,7 +18,14 @@ const upload = multer({ storage: fileStorage })
 
 const storageRouter = new Router()
 // upload entity to storage
-  .post('/entity', upload.single('entity'), buildHandler('entity-single-file-upload', METHOD_NAMESPACE.STORAGE))
+  .post('/entity',
+  // request should be multipart/form-data
+    upload.fields([
+      { name: 'content', maxCount: 1 },
+      { name: 'preview', maxCount: 1 }
+    ]),
+    buildHandler('entity-upload-as-nft', METHOD_NAMESPACE.STORAGE)
+  )
 // get entity metadata, include entity data http url
   .get('/entity/:reference', buildHandler('entity-get-metadata', METHOD_NAMESPACE.STORAGE))
 // get entity as json data directly
