@@ -4,7 +4,7 @@ import { buildHandler } from '../factory'
 
 const platformRouter = new Router()
 // get contract information
-  .get('/:contract/info', buildHandler('token-detail-info-nft', METHOD_NAMESPACE.BLOCKCHAIN))
+  .get('/:contract/info', buildHandler('token-query-detail-info-nft', METHOD_NAMESPACE.BLOCKCHAIN))
 // get owners' balance detail
   .get('/:contract/balance/:address', buildHandler('account-query-balance-nft-details', METHOD_NAMESPACE.BLOCKCHAIN))
 // try build transaction - create the NFT

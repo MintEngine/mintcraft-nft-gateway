@@ -4,7 +4,7 @@ import { buildHandler } from '../factory'
 
 const platformRouter = new Router()
 // get contract information
-  .get('/:contract/info', buildHandler('token-detail-info', METHOD_NAMESPACE.BLOCKCHAIN))
+  .get('/:contract/info', buildHandler('token-query-detail-info', METHOD_NAMESPACE.BLOCKCHAIN))
 // get owners' balance detail
   .get('/:contract/balance/:address', buildHandler('account-query-balance', METHOD_NAMESPACE.BLOCKCHAIN))
 // try build transaction - transfer

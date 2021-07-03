@@ -1,2 +1,3 @@
-export * from './local-methods'
-export * from './local-services'
+export * from './shared-methods'
+export * from './shared-services'
+export * from './master-methods'
