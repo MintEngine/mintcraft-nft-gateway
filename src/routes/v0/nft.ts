@@ -3,6 +3,6 @@ import { buildHandler } from '../factory'
 import * as types from '../../types'
 
 const router = new Router()
-  .get('/', buildHandler('', types.METHOD_NAMESPACE.BLOCKCHAIN))
+  .get('/', buildHandler('todo', types.METHOD_NAMESPACE.BLOCKCHAIN))
 
 export = router

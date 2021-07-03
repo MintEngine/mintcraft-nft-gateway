@@ -60,6 +60,12 @@ async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, o
   if (_.isString(data.store)) {
     autoData.nftStorage = data.store
   }
+  // 若存在 file，则设置 fileInfo
+  if (ctx.request.file !== undefined || ctx.request.files !== undefined) {
+    const files = ctx.request.file !== undefined ? [ctx.request.file] : ctx.request.files
+    // 仅提取要素
+    autoData.files = files.map(one => _.pick(one, ['fieldname', 'originalname', 'encoding', 'mimetype', 'size', 'destination', 'filename', 'path', 'buffer']))
+  }
   // 预设值
   const preset = opts?.preset ?? {}
   // 设置 keys，以便于后续区别
