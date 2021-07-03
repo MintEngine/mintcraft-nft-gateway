@@ -18,12 +18,13 @@ const storageRouter = new Router()
 // upload entity to storage
   .post('/entity', upload.single('entity'), buildHandler('entity-single-file-upload', METHOD_NAMESPACE.STORAGE))
 // get entity metadata, include entity data http url
-  .get('/entity/:reference', buildHandler('entity-fetch-metadata', METHOD_NAMESPACE.STORAGE))
+  .get('/entity/:reference', buildHandler('entity-get-metadata', METHOD_NAMESPACE.STORAGE))
 // get entity as json data directly
-  .get('/entity/:reference/json', buildHandler('entity-fetch-data', METHOD_NAMESPACE.STORAGE))
+  .get('/entity/:reference/json', buildHandler('entity-fetch-as-json', METHOD_NAMESPACE.STORAGE))
 
 // export routers
 const router = new Router()
   .post('/:store', storageRouter.routes() as Middleware<any, {}>)
+  .get('/', buildHandler('list-all-storages', METHOD_NAMESPACE.NULL))
 
 export = router

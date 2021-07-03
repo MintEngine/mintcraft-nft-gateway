@@ -7,6 +7,11 @@ const platformRouter = new Router()
   .post('/send-rawtx', buildHandler('platform-send-rawtx', METHOD_NAMESPACE.BLOCKCHAIN, {
     rawtx: { type: 'string', required: true }
   }))
+// platform call for more information (not to send transaction)
+  .post('/call', buildHandler('platform-general-call', METHOD_NAMESPACE.BLOCKCHAIN, {
+    method: { type: 'string', required: true },
+    params: { type: 'array', required: false, min: 0 }
+  }))
 // get transaction basic infomation
   .get('/tx/:hash', buildHandler('platform-query-transaction', METHOD_NAMESPACE.BLOCKCHAIN))
 // get transaction detail infomation (not supported for all platforms)

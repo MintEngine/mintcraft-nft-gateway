@@ -26,7 +26,7 @@ const platformRouter = new Router()
     amount: { type: 'int', required: false, default: 1, min: 1 }
   }))
 // try build transaction - transfer
-  .post('/:contract/build-tx-transfer', buildHandler('build-transaction-transfer', METHOD_NAMESPACE.BLOCKCHAIN, {
+  .post('/:contract/build-tx-transfer', buildHandler('build-transaction-transfer-nfts', METHOD_NAMESPACE.BLOCKCHAIN, {
     // the transaction signer address, default is 'sender'
     signer: { type: 'string', required: false },
     // nft sender
