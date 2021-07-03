@@ -1,11 +1,11 @@
 import path from 'path'
-import Router, { Middleware } from '@koa/router'
 import multer from '@koa/multer'
+import Router, { Middleware } from '@koa/router'
 import { METHOD_NAMESPACE } from '@mintcraft/types'
 import { buildHandler } from '../factory'
 
 const fileStorage = multer.diskStorage({
-  destination: path.resolve(process.cwd(), '/uploads'),
+  destination: path.resolve(process.cwd(), 'uploads'),
   filename: (req, file, callback) => {
     const extname = path.extname(file.originalname)
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`

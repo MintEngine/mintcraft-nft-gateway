@@ -63,10 +63,10 @@
     "@jadepool/consts" "^1.0.0-alpha.0"
     lodash "^4.17.21"
 
-"@jadepool/instance@^1.0.0-alpha.10":
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@jadepool/instance/-/instance-1.0.0-alpha.10.tgz#ffae09783611303cdee98560400b3354ef60b783"
-  integrity sha512-N0A4ugAeDbSIZ4uD58+EuP3IbwwdaJk/a2uCw3a0jgiY3ITE5v9wnIbULmsEhaQgx9fxgAE2fonRss4Qnkuf9w==
+"@jadepool/instance@^1.0.0-alpha.11":
+  version "1.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@jadepool/instance/-/instance-1.0.0-alpha.11.tgz#116092fff42ee06db3eadf0154b4719b585cb642"
+  integrity sha512-s7taqmakKGHWSd+QF8/4xOEKvUCPArUbCznzwxZburZ1jefJTPm/qPxxJutBQOampycwFTBsB9LL10yemkxHhw==
   dependencies:
     "@jadepool/env" "^1.0.0-alpha.0"
     "@jadepool/logger" "^2.0.3"
@@ -94,24 +94,24 @@
     moment "^2.22.2"
     supports-color "^5.5.0"
 
-"@jadepool/service-consul@^1.0.0-alpha.3":
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@jadepool/service-consul/-/service-consul-1.0.0-alpha.3.tgz#f614636569bf10ef4a7813c8a758cf069ca96ea0"
-  integrity sha512-/rFLmpM1lunApcx9fBsjGBOiYEYn+atAI6A/Z5CugKeajHVuuYSffNQFMFYYLrPWUKR+yNuOEZOMgdkNbUK5/Q==
+"@jadepool/service-consul@^1.0.0-alpha.4":
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@jadepool/service-consul/-/service-consul-1.0.0-alpha.4.tgz#70795aa149e01e0943ce92c3b16b558cabf1513a"
+  integrity sha512-HGXPzTPGhVl9JCgUwLxWMjAgcvWI0VFwawvfMMnOpa/Vxh4eCU1R8SSgV+6JJ7HKMBTABoSucJEnnZ+dLrBnZQ==
   dependencies:
     "@jadepool/consts" "^1.0.0-alpha.0"
-    "@jadepool/instance" "^1.0.0-alpha.9"
+    "@jadepool/instance" "^1.0.0-alpha.11"
     "@jadepool/logger" "^2.0.3"
     "@jadepool/types" "^1.0.0-alpha.2"
     axios "^0.21.1"
 
-"@jadepool/service-http@^1.0.0-alpha.4":
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@jadepool/service-http/-/service-http-1.0.0-alpha.4.tgz#37a72ab89e26708baa33976558dab39f3cfe1111"
-  integrity sha512-DlOlHeMkuxfHTm8xtIFKleYVpq3KCtQQMoZvicRjziHqasBwP5JpBFu7ch2RxdkuNvqT+RrNOEmGJbf5TP6GQw==
+"@jadepool/service-http@^1.0.0-alpha.6":
+  version "1.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@jadepool/service-http/-/service-http-1.0.0-alpha.6.tgz#8edb4ddc20565eb59914806a72f96ba6d750156a"
+  integrity sha512-4+5a0wUnUcAlWFuRhkDibv/Rh3A6tFO+ZXjyTn/S4vYQFFu3nxBIEt3sSqcSK3sipuQh0hoWyP9KnxmCAvg0kw==
   dependencies:
     "@jadepool/consts" "^1.0.0-alpha.0"
-    "@jadepool/instance" "^1.0.0-alpha.9"
+    "@jadepool/instance" "^1.0.0-alpha.11"
     "@jadepool/logger" "^2.0.3"
     "@jadepool/types" "^1.0.0-alpha.2"
     "@koa/cors" "^3.1.0"
@@ -304,6 +304,13 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/keygrip/-/keygrip-1.0.2.tgz#513abfd256d7ad0bf1ee1873606317b33b1b2a72"
   integrity sha512-GJhpTepz2udxGexqos8wgaBx4I/zWIDPh/KOGEwAqtuGDkOUJu5eFvwmdBX4AmB8Odsr+9pHCQqiAqDL/yKMKw==
+
+"@types/koa-bodyparser@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@types/koa-bodyparser/-/koa-bodyparser-4.3.1.tgz#ec2e06f6f50cfddba035d33a3cfe75a8f0cd7fa4"
+  integrity sha512-N1cw6UpYYW01rGanfC0guqkyqKKavXygGBeSgsJOe7EkkSlRH7BNRjzyqv1TzJ3Au69aNeagpzzqAzTo6I08ow==
+  dependencies:
+    "@types/koa" "*"
 
 "@types/koa-compose@*":
   version "3.2.5"

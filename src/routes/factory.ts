@@ -1,3 +1,4 @@
+import 'koa-bodyparser' // fix types
 import _ from 'lodash'
 import fs from 'fs'
 import jadepool from '@jadepool/instance'
