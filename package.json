@@ -1,5 +1,5 @@
 {
-  "name": "mintcraft-nft-gateway",
+  "name": "@mintcraft/nft-gateway",
   "version": "0.2.0",
   "description": "Mintcraft NFT Gateway",
   "main": "index.js",
@@ -22,6 +22,7 @@
     "@jadepool/service-http": "^1.0.0-alpha.4",
     "@jadepool/service-socketio": "^1.0.0-alpha.3",
     "@jadepool/types": "^1.0.0-alpha.2",
+    "@mintcraft/types": ">= 0.1",
     "@koa/multer": "^3.0.0",
     "@koa/router": "^10.0.0",
     "config": "^3.3.6",

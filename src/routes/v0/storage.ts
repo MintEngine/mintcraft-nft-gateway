@@ -1,8 +1,8 @@
 import path from 'path'
 import Router, { Middleware } from '@koa/router'
 import multer from '@koa/multer'
+import { METHOD_NAMESPACE } from '@mintcraft/types'
 import { buildHandler } from '../factory'
-import * as types from '../../types'
 
 const fileStorage = multer.diskStorage({
   destination: path.resolve(process.cwd(), '/uploads'),
@@ -15,7 +15,7 @@ const fileStorage = multer.diskStorage({
 const upload = multer({ storage: fileStorage })
 
 const storageRouter = new Router()
-  .post('/upload', upload.single('entity'), buildHandler('todo', types.METHOD_NAMESPACE.STORAGE))
+  .post('/upload', upload.single('entity'), buildHandler('todo', METHOD_NAMESPACE.STORAGE))
 
 // export routers
 const router = new Router()

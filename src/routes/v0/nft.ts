@@ -1,8 +1,8 @@
 import Router from '@koa/router'
+import { METHOD_NAMESPACE } from '@mintcraft/types'
 import { buildHandler } from '../factory'
-import * as types from '../../types'
 
 const router = new Router()
-  .get('/', buildHandler('todo', types.METHOD_NAMESPACE.BLOCKCHAIN))
+  .get('/', buildHandler('todo', METHOD_NAMESPACE.BLOCKCHAIN))
 
 export = router
