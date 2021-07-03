@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import fs from 'fs'
-import Parameter, { ParameterRules } from 'parameter'
 import jadepool from '@jadepool/instance'
-import { RouterContext, Middleware } from '@koa/router'
 import { NBError } from '@jadepool/types'
+import Parameter, { ParameterRules } from 'parameter'
+import { RouterContext, Middleware } from '@koa/router'
 import { ParsedArgs, METHOD_NAMESPACE, RESPONSE_MODES } from '@mintcraft/types'
 
 export interface BuildHandlerOption {

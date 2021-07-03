@@ -2,14 +2,17 @@ import Router from '@koa/router'
 // routers
 import routerNFT from './nft'
 import routerStorage from './storage'
-import routerTransaction from './txs'
+import routerPlatform from './platform'
+import routerToken from './token'
 
 const router = new Router()
-// 交易相关
-router.use('/txs', routerTransaction.routes())
-// NFT 信息
-router.use('/nft', routerNFT.routes())
-// 存储相关
+// storage routes
 router.use('/storage', routerStorage.routes())
+// blockchain platform routes
+router.use('/platform', routerPlatform.routes())
+// NFT routes
+router.use('/nft', routerNFT.routes())
+// FT routes
+router.use('/token', routerToken.routes())
 
 export = router
