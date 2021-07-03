@@ -1,5 +1,7 @@
+import _ from 'lodash'
 import Router from '@koa/router'
-import { METHOD_NAMESPACE } from '@mintcraft/types'
+import { METHOD_NAMESPACE, PLATFORMS } from '@mintcraft/types'
+import supportedParams from '../../middlewares/supported-params'
 import { buildHandler } from '../factory'
 
 const platformRouter = new Router()
@@ -21,7 +23,7 @@ const platformRouter = new Router()
 
 // export routers
 const router = new Router()
-  .post('/:platform', platformRouter.routes())
+  .post('/:platform', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
   .get('/', buildHandler('list-all-platforms', METHOD_NAMESPACE.NULL))
 
 export = router

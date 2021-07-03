@@ -1,7 +1,9 @@
+import _ from 'lodash'
 import path from 'path'
 import multer from '@koa/multer'
 import Router, { Middleware } from '@koa/router'
-import { METHOD_NAMESPACE } from '@mintcraft/types'
+import { METHOD_NAMESPACE, STORAGES } from '@mintcraft/types'
+import supportedParams from '../../middlewares/supported-params'
 import { buildHandler } from '../factory'
 
 const fileStorage = multer.diskStorage({
@@ -24,7 +26,7 @@ const storageRouter = new Router()
 
 // export routers
 const router = new Router()
-  .post('/:store', storageRouter.routes() as Middleware<any, {}>)
+  .post('/:store', supportedParams('store', _.values(STORAGES)), storageRouter.routes() as Middleware<any, {}>)
   .get('/', buildHandler('list-all-storages', METHOD_NAMESPACE.NULL))
 
 export = router
