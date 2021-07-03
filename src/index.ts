@@ -1,3 +1,4 @@
+#!/usr/bin/env ts-node
 import Logger from '@jadepool/logger'
 import jadepool from '@jadepool/instance'
 import consts from '@jadepool/consts'
