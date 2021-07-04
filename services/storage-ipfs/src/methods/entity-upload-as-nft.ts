@@ -14,6 +14,7 @@ export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntity
   const token: string = config.get('nftStorage.accessToken')
   // storage instance
   const storage = new NFTStorage({ token, endpoint })
+
   // store metadata
   const metadata = await storage.store({
     // TODO implement ERC1155 metadata

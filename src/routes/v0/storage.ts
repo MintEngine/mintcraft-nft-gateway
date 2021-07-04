@@ -24,7 +24,15 @@ const storageRouter = new Router()
       { name: 'content', maxCount: 1 },
       { name: 'preview', maxCount: 1 }
     ]),
-    buildHandler('entity-upload-as-nft', METHOD_NAMESPACE.STORAGE)
+    buildHandler('entity-upload-as-nft', METHOD_NAMESPACE.STORAGE, {
+      name: { type: 'string', required: true },
+      description: { type: 'string', required: true },
+      // nft properties, should be json string
+      properties: { type: 'string', required: false, allowEmpty: false },
+      // extra url for metadta
+      external_url: { type: 'url', required: false, allowEmpty: false },
+      animation_url: { type: 'url', required: false, allowEmpty: false }
+    })
   )
 // get entity metadata, include entity data http url
   .get('/entity/:reference', buildHandler('entity-get-metadata', METHOD_NAMESPACE.STORAGE))
