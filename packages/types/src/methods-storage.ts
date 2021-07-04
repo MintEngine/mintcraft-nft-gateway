@@ -17,3 +17,8 @@ export interface ResultEntityUploaded {
   /** metadata json with gateway url  */
   embed?: NFTMetadata
 }
+
+export const UPLOADING_FIELDS = {
+  CONTENT: 'content',
+  PREVIEW: 'preview'
+}

@@ -3,6 +3,9 @@
 interface OpenSeaAttrItem {
   trait_type: string
 }
+interface NamedItem {
+  name: string
+}
 // property object
 interface OpenSeaStringProperty {
   value: string
@@ -23,7 +26,9 @@ export interface OpenSeaNFTMetadataBasics {
   /** nft name */
   name: string
   /** nft description */
-  description: string
+  description: string/**  */
+  /** nft preview url field */
+  image?: string
   /** opeasea external url field */
   external_url?: string
   /** opeasea animation url field */
@@ -31,18 +36,15 @@ export interface OpenSeaNFTMetadataBasics {
 }
 
 // ------ Mintcraft Asset metadta ------
-export const SUPPORTED_ENGINES = {
-  UNREAL_ENGINE_4: 'ue4',
-  UNREAL_ENGINE_5: 'ue5',
-  UNITY: 'unity'
-}
 export const SUPPORTED_ASSETS = {
   FBX: 'fbx',
   OBJ: 'obj'
 }
+
 export interface MintcraftAssetMeta {
-  engine: 'ue4' | 'ue5' | 'unity'
+  /** content url field */
   content: string
+  /** content type */
   content_type: 'fbx' | 'obj'
 }
 
@@ -53,7 +55,7 @@ export interface MintcraftAssetProperty {
 // ------ NFT metadata schema ------
 export interface NFTMetadata extends OpenSeaNFTMetadataBasics {
   /** erc1155 nft properties */
-  properties?: Record<string, string> & Record<string, OpenSeaProperty> & MintcraftAssetProperty
+  properties?: Record<string, string> & Record<string, OpenSeaProperty & NamedItem> & MintcraftAssetProperty
   /** opeasea attributes */
   attributes?: Array<OpenSeaAttrItem & OpenSeaProperty>
 }

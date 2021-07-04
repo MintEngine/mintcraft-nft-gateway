@@ -2,7 +2,7 @@ import _ from 'lodash'
 import path from 'path'
 import multer from '@koa/multer'
 import Router, { Middleware } from '@koa/router'
-import { METHOD_NAMESPACE, STORAGES } from '@mintcraft/types'
+import { METHOD_NAMESPACE, STORAGES, UPLOADING_FIELDS } from '@mintcraft/types'
 import supportedParams from '../../middlewares/supported-params'
 import { buildHandler } from '../factory'
 
@@ -21,8 +21,8 @@ const storageRouter = new Router()
   .post('/entity',
   // request should be multipart/form-data
     upload.fields([
-      { name: 'content', maxCount: 1 },
-      { name: 'preview', maxCount: 1 }
+      { name: UPLOADING_FIELDS.CONTENT, maxCount: 1 },
+      { name: UPLOADING_FIELDS.PREVIEW, maxCount: 1 }
     ]),
     buildHandler('entity-upload-as-nft', METHOD_NAMESPACE.STORAGE, {
       // nft basic info
