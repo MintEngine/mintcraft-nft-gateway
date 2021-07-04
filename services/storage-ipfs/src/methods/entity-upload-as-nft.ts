@@ -2,14 +2,14 @@ import fs from 'fs'
 import { URL } from 'url'
 import config from 'config'
 import { NFTStorage, File } from 'nft.storage'
-import { ParsedArgs, ResultEntityUploaded } from '@mintcraft/types'
+import { ArgsEntityUpload, ResultEntityUploaded } from '@mintcraft/types'
 
 /**
  * method implement
  * @param namespace
  * @param args
  */
-export = async (namespace: string, args: ParsedArgs): Promise<ResultEntityUploaded> => {
+export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntityUploaded> => {
   const endpoint: string = config.get('nftStorage.endpoint')
   const token: string = config.get('nftStorage.accessToken')
   // storage instance
