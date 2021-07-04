@@ -25,6 +25,7 @@ const storageRouter = new Router()
       { name: 'preview', maxCount: 1 }
     ]),
     buildHandler('entity-upload-as-nft', METHOD_NAMESPACE.STORAGE, {
+      // nft basic info
       name: { type: 'string', required: true },
       description: { type: 'string', required: true },
       // nft properties, should be json string
