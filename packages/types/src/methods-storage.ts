@@ -3,7 +3,7 @@ import { ParsedArgs } from './methods-shared'
 import { OpenSeaNFTMetadataBasics, NFTMetadata } from './nft'
 
 // ------- consts -------
-// 
+//
 export const UPLOADING_FIELDS = {
   CONTENT: 'content',
   PREVIEW: 'preview'

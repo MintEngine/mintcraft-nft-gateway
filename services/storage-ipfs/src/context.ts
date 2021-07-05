@@ -24,7 +24,9 @@ class Context extends jadepool.Context {
   get autoRegisterServices (): string[] {
     return [
       // 默认加载consul服务, 使用defaultConsul配置
-      consts.SERVICE_NAMES.CONSUL
+      consts.SERVICE_NAMES.CONSUL,
+      // 加载 nft.storage
+      'nft.storage'
     ]
   }
 
@@ -45,6 +47,10 @@ class Context extends jadepool.Context {
         case consts.SERVICE_NAMES.CONSUL: {
           const { ConsulService } = await import('@jadepool/service-consul')
           ClassToRegister = ConsulService
+          break
+        }
+        case 'nft.storage': {
+          ClassToRegister = (await import('./services/nft.storage.service')).default
           break
         }
         default:

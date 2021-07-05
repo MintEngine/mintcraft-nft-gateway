@@ -1,15 +1,17 @@
 import fs from 'fs'
+import path from 'path'
 import _ from 'lodash'
 import { URL } from 'url'
-import config from 'config'
-import { NFTStorage, File } from 'nft.storage'
+import { File } from 'nft.storage'
+import jadepool from '@jadepool/instance'
 import {
   UPLOADING_FIELDS,
   ArgsEntityUpload,
   ResultEntityUploaded,
   NFTMetadata
 } from '@mintcraft/types'
-import path from 'path'
+
+import NFTStorageServ from '../services/nft.storage.service'
 
 /**
  * method implement
@@ -17,11 +19,6 @@ import path from 'path'
  * @param args
  */
 export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntityUploaded> => {
-  const endpoint: string = config.get('nftStorage.endpoint')
-  if (_.isEmpty(endpoint)) throw new Error('missing nft.storage endpoint config.')
-  const token: string = config.get('nftStorage.accessToken')
-  if (_.isEmpty(token) || token.length < 200) throw new Error('missing nft.storage token config.')
-
   if (_.isEmpty(args.name)) throw new Error('invalid args: missing name.')
   if (_.isEmpty(args.description)) throw new Error('invalid args: missing description.')
 
@@ -66,10 +63,10 @@ export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntity
   data.properties = data.properties ?? {}
 
   // storage instance
-  const storage = new NFTStorage({ token, endpoint })
+  const nftServ = jadepool.getService('nft.storage') as NFTStorageServ
 
   // store metadata
-  const metadata = await storage.store(_.merge(data, {
+  const metadata = await nftServ.storage.store(_.merge(data, {
     image: new File([await fs.promises.readFile(previewImage.path)], previewImage.filename, {
       type: previewImage.mimetype
     }),
