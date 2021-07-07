@@ -12,8 +12,10 @@ export const UPLOADING_FIELDS = {
 // ------- interface -------
 //
 interface ArgsWithReference {
-  /** reference args for entity */
+  /** reference argument for the entity */
   reference: string
+  /** store argument for the entity */
+  store: string
 }
 
 export interface ArgsEntityUpload extends ParsedArgs, OpenSeaNFTMetadataBasics {

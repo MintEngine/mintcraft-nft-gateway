@@ -1,12 +1,12 @@
 // import _ from 'lodash'
-import { ParsedArgs } from '@mintcraft/types'
+import { ArgsBuildTxMint } from '@mintcraft/types'
 
 /**
  * method implement
  * @param namespace
  * @param args
  */
-export = async (namespace: string, args: ParsedArgs): Promise<any> => {
+export = async (namespace: string, args: ArgsBuildTxMint): Promise<any> => {
   // TODO implement
   throw new Error('unimplemented!')
 }
