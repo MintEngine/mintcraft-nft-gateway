@@ -23,7 +23,7 @@ const platformRouter = new Router()
 
 // export routers
 const router = new Router()
-  .post('/:platform', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
+  .post('/:platform/:chainId', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
   .get('/', buildHandler('list-all-platforms', METHOD_NAMESPACE.NULL))
 
 export = router

@@ -16,6 +16,21 @@ export const PLATFORMS = {
   FLOW: 'flow'
 }
 
+export const PLATFORM_CHAINIDS = {
+  EVM: [
+    'mainnet',
+    'ropsten',
+    'rinkeby',
+    'goerli'
+  ],
+  SUBSTRATE_INK: [
+    'canvas'
+  ],
+  FLOW: [
+    'mainnet'
+  ]
+}
+
 export const STORAGES = {
   IPFS: 'ipfs',
   ARWEAVE: 'ar',

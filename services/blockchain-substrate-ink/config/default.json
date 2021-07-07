@@ -1,3 +1,6 @@
 {
-  "logLevel": "INFO"
+  "logLevel": "INFO",
+  "substrate": {
+    
+  }
 }

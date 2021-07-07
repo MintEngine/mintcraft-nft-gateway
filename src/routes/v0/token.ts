@@ -28,6 +28,6 @@ const platformRouter = new Router()
 // export routers
 const router = new Router()
 // platform and token's contract addesss is included in url
-  .post('/:platform', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
+  .post('/:platform/:chainId', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
 
 export = router
