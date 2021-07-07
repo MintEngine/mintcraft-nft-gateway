@@ -12,7 +12,8 @@ export const RESPONSE_MODES = {
 
 export const PLATFORMS = {
   EVM: 'ethereum',
-  SUBSTRATE_INK: 'substrate-ink'
+  SUBSTRATE_INK: 'substrate-ink',
+  FLOW: 'flow'
 }
 
 export const STORAGES = {
