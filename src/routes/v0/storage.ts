@@ -28,8 +28,10 @@ const storageRouter = new Router()
       // nft basic info
       name: { type: 'string', required: true },
       description: { type: 'string', required: true },
-      // nft properties, should be json string
+      // nft properties(1155 format), should be json string
       properties: { type: 'string', required: false, allowEmpty: false },
+      // nft properties(opensea format), should be json string
+      attributes: { type: 'string', required: false, allowEmpty: false },
       // extra url for metadta
       external_url: { type: 'url', required: false, allowEmpty: false },
       animation_url: { type: 'url', required: false, allowEmpty: false }

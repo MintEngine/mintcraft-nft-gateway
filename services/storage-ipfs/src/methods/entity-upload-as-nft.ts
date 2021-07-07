@@ -27,17 +27,26 @@ export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntity
     name: args.name,
     description: args.description
   }
-
+  // erc1155 format
   if (typeof args.properties === 'string') {
     let json
     try {
       json = JSON.parse(args.properties)
     } catch (err) {}
     // TODO ensure json string is valid
+    if (json !== undefined && !_.isArray(json)) {
+      data.properties = json
+    }
+  }
+  // opensea format
+  if (typeof args.attributes === 'string') {
+    let json
+    try {
+      json = JSON.parse(args.attributes)
+    } catch (err) {}
+    // TODO ensure json string is valid
     if (_.isArray(json)) {
       data.attributes = json
-    } else if (json !== undefined) {
-      data.properties = json
     }
   }
   // extra data

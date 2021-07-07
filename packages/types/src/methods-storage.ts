@@ -19,6 +19,8 @@ interface ArgsWithReference {
 export interface ArgsEntityUpload extends ParsedArgs, OpenSeaNFTMetadataBasics {
   /** nft properties json string */
   properties?: string
+  /** nft attributes json string */
+  attributes?: string
 }
 
 export interface ResultEntityUploaded {

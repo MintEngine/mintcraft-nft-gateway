@@ -132,7 +132,8 @@ export function buildHandler (methodName: string, methodNsp?: string, dataRule?:
     try {
       result = await invoker(ctx)
     } catch (err) {
-      return ctx.throw(500, err)
+      const code = err?.status ?? err?.response?.status ?? err?.res?.status ?? 500
+      return ctx.throw(code, err)
     }
 
     // 根据res模式返回结果
