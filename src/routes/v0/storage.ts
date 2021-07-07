@@ -2,7 +2,7 @@ import _ from 'lodash'
 import path from 'path'
 import multer from '@koa/multer'
 import Router, { Middleware } from '@koa/router'
-import { METHOD_NAMESPACE, STORAGES, UPLOADING_FIELDS, SUPPORTED_MIME_TYPES } from '@mintcraft/types'
+import { METHOD_NAMESPACE, STORAGES, UPLOADING_FIELDS } from '@mintcraft/types'
 import supportedParams from '../../middlewares/supported-params'
 import { buildHandler } from '../factory'
 
@@ -37,11 +37,11 @@ const storageRouter = new Router()
       animation_url: { type: 'url', required: false, allowEmpty: false }
     })
   )
-// get entity metadata, include entity data http url
+// get entity metadata
   .get('/entity/:reference', buildHandler('entity-get-metadata', METHOD_NAMESPACE.STORAGE))
-// get entity as json data directly
-  .get('/entity/:reference/json', buildHandler('entity-fetch-as-x', METHOD_NAMESPACE.STORAGE, undefined, {
-    preset: { mimetype: SUPPORTED_MIME_TYPES.JSON }
+// get entity metadata, include entity data with gateway url
+  .get('/entity/:reference/gateway', buildHandler('entity-get-metadata', METHOD_NAMESPACE.STORAGE, undefined, {
+    preset: { asGatewayUrl: true }
   }))
 
 // export routers

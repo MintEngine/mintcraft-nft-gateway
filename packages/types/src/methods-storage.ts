@@ -34,4 +34,6 @@ export interface ResultEntityUploaded {
   embed?: NFTMetadata
 }
 
-export type ArgeEntityGetMetadata = ParsedArgs & ArgsWithReference
+export type ArgsEntityGetMetadata = ParsedArgs & ArgsWithReference & {
+  asGatewayUrl?: boolean
+}
