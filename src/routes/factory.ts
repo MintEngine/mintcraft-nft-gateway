@@ -5,15 +5,15 @@ import jadepool from '@jadepool/instance'
 import { NBError } from '@jadepool/types'
 import Parameter, { ParameterRules } from 'parameter'
 import { RouterContext, Middleware } from '@koa/router'
-import { ParsedArgs, METHOD_NAMESPACE, RESPONSE_MODES } from '@mintcraft/types'
+import { ParsedArgs, METHOD_NAMESPACE, RESPONSE_MODES, SUPPORTED_MIME_TYPES } from '@mintcraft/types'
 
 export interface BuildHandlerOption {
   /** 预定义对象 */
-  preset: ParsedArgs
+  preset?: ParsedArgs
   /** 允许rule以外的key在data之中 */
-  allowUnruled: boolean
+  allowUnruled?: boolean
   /** 结果处理函数，默认为json */
-  responseMode: 'json' | 'download'
+  responseMode?: 'json' | 'download'
 }
 
 type DataRuleParams = ParameterRules | ((ctx: RouterContext) => Promise<ParameterRules>)
@@ -152,7 +152,7 @@ export function buildHandler (methodName: string, methodNsp?: string, dataRule?:
     } else {
       // 返回最终的result
       ctx.response.status = 200
-      ctx.response.type = 'application/json'
+      ctx.response.type = SUPPORTED_MIME_TYPES.JSON
       ctx.response.body = result ?? {}
     }
   }

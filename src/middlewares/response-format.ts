@@ -1,4 +1,5 @@
 import { Middleware } from '@koa/router'
+import { SUPPORTED_MIME_TYPES } from '@mintcraft/types'
 
 export default (): Middleware => {
   return async (ctx, next) => {
@@ -7,7 +8,7 @@ export default (): Middleware => {
 
     // 仅封装处理 200 ~ 299 的请求
     const isOk = ctx.status >= 200 && ctx.status < 300
-    const isJson = ctx.response.type === 'application/json'
+    const isJson = ctx.response.type === SUPPORTED_MIME_TYPES.JSON
     if (isOk && isJson) {
       // 原始数据
       const obj = ctx.body

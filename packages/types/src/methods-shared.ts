@@ -8,7 +8,7 @@ export interface ParsedArgs extends Record<string, unknown> {
   /** 上传的内容 */
   files?: multer.File[]
   /** preset keys */
-  presetKeys: string[]
+  presetKeys?: string[]
   /** auto keys */
-  autoKeys: string[]
+  autoKeys?: string[]
 }
