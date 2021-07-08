@@ -46,7 +46,10 @@ const storageRouter = new Router()
 
 // export routers
 const router = new Router()
-  .post('/:store', supportedParams('store', _.values(STORAGES)), storageRouter.routes() as Middleware<any, {}>)
+  .use('/:store',
+    supportedParams('store', _.values(STORAGES)),
+    storageRouter.routes() as Middleware<any, {}>
+  )
   .get('/', buildHandler('list-all-storages', METHOD_NAMESPACE.NULL))
 
 export = router

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import Router from '@koa/router'
-import { METHOD_NAMESPACE, PLATFORMS } from '@mintcraft/types'
+import { METHOD_NAMESPACE, PLATFORMS, PLATFORM_CHAINIDS } from '@mintcraft/types'
 import supportedParams from '../../middlewares/supported-params'
 import { buildHandler } from '../factory'
 
@@ -56,6 +56,10 @@ const platformRouter = new Router()
 // export routers
 const router = new Router()
 // platform and nft's contract addesss is included in url
-  .post('/:platform/:chainId', supportedParams('platform', _.values(PLATFORMS)), platformRouter.routes())
+  .use('/:platform/:chainId',
+    supportedParams('platform', _.values(PLATFORMS)),
+    supportedParams('chainId', (ctx) => PLATFORM_CHAINIDS[ctx.params.platform]),
+    platformRouter.routes()
+  )
 
 export = router

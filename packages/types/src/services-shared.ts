@@ -17,16 +17,16 @@ export const PLATFORMS = {
 }
 
 export const PLATFORM_CHAINIDS = {
-  EVM: [
+  [PLATFORMS.EVM]: [
     'mainnet',
     'ropsten',
     'rinkeby',
     'goerli'
   ],
-  SUBSTRATE_INK: [
+  [PLATFORMS.SUBSTRATE_INK]: [
     'canvas'
   ],
-  FLOW: [
+  [PLATFORMS.FLOW]: [
     'mainnet'
   ]
 }
