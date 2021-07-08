@@ -47,6 +47,9 @@ class Context extends jadepool.Context {
           ClassToRegister = ConsulService
           break
         }
+        case 'substrate':
+          ClassToRegister = (await import('./services/substrate.service')).default
+          break
         default:
           logger.warn(`failed to registerService: ${serviceClass}`)
           throw new Error('invalid service.')
