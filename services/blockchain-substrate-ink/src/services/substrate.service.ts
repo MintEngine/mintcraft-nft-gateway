@@ -1,10 +1,15 @@
 import _ from 'lodash'
 import { IConfig } from 'config'
 import { ApiPromise, WsProvider } from '@polkadot/api'
+import type { Signer, SignerResult } from '@polkadot/api/types'
+import type { Header, SignedBlock } from '@polkadot/types/interfaces'
+import type { AnyJson, SignerPayloadRaw, SignatureOptions } from '@polkadot/types/types'
+import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types'
+import { blake2AsHex } from '@polkadot/util-crypto'
 import Logger from '@jadepool/logger'
 import { BaseService } from '@jadepool/types'
 import { JadePool } from '@jadepool/instance'
-import { PLATFORMS, PLATFORM_CHAINIDS } from '@mintcraft/types'
+import { PLATFORMS, PLATFORM_CHAINIDS, ResultTrxBuilt } from '@mintcraft/types'
 
 const logger = Logger.of('Service', 'Substrate')
 
@@ -12,6 +17,14 @@ const logger = Logger.of('Service', 'Substrate')
 interface EndpointDefine {
   name: string
   url: string
+}
+
+interface ContractDefine {
+  name: string
+  category: 'nft' | 'token'
+  symbol?: string
+  address: string
+  abi: AnyJson
 }
 
 class Service extends BaseService {
@@ -63,6 +76,32 @@ class Service extends BaseService {
   }
 
   /**
+   * get supported contracts
+   * @param category contract type
+   */
+  getSupportedContracts (category: 'nft' | 'token'): ContractDefine[] {
+    const contracts = this.config.get<ContractDefine[]>('contracts')
+    return contracts.filter(one => one.category === category)
+  }
+
+  /**
+   * ensure the contract and return it
+   */
+  ensureContractSupported (contractOrNameOrSymbol: string): ContractDefine {
+    const inputName = _.trim(contractOrNameOrSymbol).toLowerCase()
+    const contracts = this.config.get<ContractDefine[]>('contracts')
+    const found = contracts.find(one => {
+      return one.name.toLowerCase() === inputName ||
+        one.address.toLowerCase() === inputName ||
+        (one.symbol !== undefined ? one.symbol.toLowerCase() === inputName : false)
+    })
+    if (found === undefined) {
+      throw new Error(`${contractOrNameOrSymbol} didn't find.`)
+    }
+    return found
+  }
+
+  /**
    * get substrate api promise
    * @param chainId
    */
@@ -99,6 +138,84 @@ class Service extends BaseService {
       this._apis.set(chainId, promise)
       return await promise
     }
+  }
+
+  /**
+   * get nonce
+   */
+  async getAccountNextNonce (api: ApiPromise, address: string): Promise<number> {
+    const nonce = await api.rpc.system.accountNextIndex(address)
+    return nonce.toNumber()
+  }
+
+  /**
+   * get block
+   */
+  async getBlock (api: ApiPromise, hash?: number | string): Promise<SignedBlock> {
+    let signedBlock: SignedBlock
+    if (hash === undefined) {
+      signedBlock = await api.rpc.chain.getBlock()
+    } else if (typeof hash === 'number') {
+      const hashStr = await api.rpc.chain.getBlockHash(hash)
+      signedBlock = await api.rpc.chain.getBlock(hashStr)
+    } else {
+      signedBlock = await api.rpc.chain.getBlock(hash)
+    }
+    return signedBlock
+  }
+
+  /**
+   * block header
+   */
+  async getBlockHeader (api: ApiPromise, hash?: number | string): Promise<Header> {
+    const signedBlock = await this.getBlock(api, hash)
+    return signedBlock.block.header
+  }
+
+  /**
+   * build the extrinsic
+   */
+  async buildUnsignedExtrinsic (api: ApiPromise, sender: string, extrinsic: SubmittableExtrinsic<'promise'>, mortalBlocks: number = 64): Promise<ResultTrxBuilt> {
+    const senderAddressNonce = await this.getAccountNextNonce(api, sender)
+    const header = await this.getBlockHeader(api)
+    const blocks = 64 // default mortal blocks is 64
+
+    // add signing data
+    const options: SignatureOptions = {
+      blockHash: header.hash,
+      era: api.registry.createType('ExtrinsicEra', {
+        current: header.number,
+        period: blocks
+      }),
+      nonce: senderAddressNonce,
+      genesisHash: api.genesisHash,
+      runtimeVersion: api.runtimeVersion,
+      signedExtensions: api.registry.signedExtensions
+    }
+    // unsigned rawhex with faked sig
+    const unsignedRawHex = extrinsic.signFake(sender, options).toHex()
+    // hacking the payload
+    options.signer = new RawSigner()
+    const signedFaked = await extrinsic.signAsync(sender, options)
+    const signingPayload = signedFaked.signature.toHex()
+    return {
+      unsignedRawHex,
+      signingPayload
+    }
+  }
+}
+
+/**
+ * Fake signer to expose payload hex
+ */
+class RawSigner implements Signer {
+  public async signRaw ({ data }: SignerPayloadRaw): Promise<SignerResult> {
+    return await new Promise((resolve, reject): void => {
+      const hashed = (data.length > (256 + 1) * 2)
+        ? blake2AsHex(data)
+        : data
+      resolve({ id: 1, signature: hashed })
+    })
   }
 }
 

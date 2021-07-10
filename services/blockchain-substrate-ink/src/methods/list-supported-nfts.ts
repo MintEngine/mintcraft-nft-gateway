@@ -1,5 +1,7 @@
-// import _ from 'lodash'
+import { pick } from 'lodash'
+import jadepool from '@jadepool/instance'
 import { ParsedArgs } from '@mintcraft/types'
+import SubstrateSrv from '../services/substrate.service'
 
 /**
  * method implement
@@ -7,6 +9,7 @@ import { ParsedArgs } from '@mintcraft/types'
  * @param args
  */
 export = async (namespace: string, args: ParsedArgs): Promise<any> => {
-  // TODO implement
-  throw new Error('unimplemented!')
+  const substrateSrv = jadepool.getService('substrate') as SubstrateSrv
+  const contracts = substrateSrv.getSupportedContracts('nft')
+  return contracts.map(one => pick(one, ['name', 'address', 'category', 'symbol']))
 }

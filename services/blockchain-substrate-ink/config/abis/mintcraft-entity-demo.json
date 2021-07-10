@@ -1,0 +1,1488 @@
+{
+  "metadataVersion": "0.1.0",
+  "source": {
+    "hash": "0x8499f2594e0d93e53ce6049444751a57c32ce24e51b920ef2f239854bb85c11f",
+    "language": "ink! 3.0.0-rc3",
+    "compiler": "rustc 1.54.0-nightly"
+  },
+  "contract": {
+    "name": "entity",
+    "version": "0.1.0",
+    "authors": [
+      "MintEngine Lab <admin@mintcraft.org>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "name": "_base_uri",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 20
+            }
+          }
+        ],
+        "docs": [
+          "Initialize a default instance of this ERC-1155 implementation."
+        ],
+        "name": [
+          "new"
+        ],
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [
+              " previous owner account id"
+            ],
+            "indexed": true,
+            "name": "previous_owner",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 24
+            }
+          },
+          {
+            "docs": [
+              " new owner account id"
+            ],
+            "indexed": true,
+            "name": "new_owner",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 24
+            }
+          }
+        ],
+        "docs": [
+          " Event emitted when Owner AccountId Transferred"
+        ],
+        "name": "OwnershipTransferred"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "operator",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 24
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "from",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 24
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "to",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 24
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "name": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "docs": [
+          " Indicate that a token transfer has occured.",
+          "",
+          " This must be emitted even if a zero value transfer occurs.",
+          " @dev Either `TransferSingle` or `TransferBatch` MUST emit when tokens are transferred, including zero value transfers as well as minting or burning (see \"Safe Transfer Rules\" section of the standard).",
+          "",
+          " The `_operator` argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).",
+          " The `_from` argument MUST be the address of the holder whose balance is decreased.",
+          " The `_to` argument MUST be the address of the recipient whose balance is increased.",
+          " The `_id` argument MUST be the token type being transferred.",
+          " The `_value` argument MUST be the number of tokens the holder balance is decreased by and match what the recipient balance is increased by.",
+          " When minting/creating tokens, the `_from` argument MUST be set to `0x0` (i.e. zero address).",
+          " When burning/destroying tokens, the `_to` argument MUST be set to `0x0` (i.e. zero address)."
+        ],
+        "name": "TransferSingle"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "name": "approved",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 28
+            }
+          }
+        ],
+        "docs": [
+          " @dev MUST emit when approval for a second party/operator address to manage all tokens for an owner address is enabled or disabled (absence of an event assumes disabled)."
+        ],
+        "name": "ApprovalForAll"
+      }
+    ],
+    "messages": [
+      {
+        "args": [
+          {
+            "name": "_initial_supply",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "_metadata_uri",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 20
+            }
+          }
+        ],
+        "docs": [
+          " Create the initial supply for a token.",
+          "",
+          " The initial supply will be provided to the caller (a.k.a the minter), and the",
+          " `token_id` will be assigned by the smart contract.",
+          "",
+          " Note that as implemented anyone can create tokens. If you were to deploy this to a",
+          " production environment you'd probably want to lock down the addresses that are allowed",
+          " to create tokens."
+        ],
+        "mutates": true,
+        "name": [
+          "create"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "TokenId"
+          ],
+          "type": 7
+        },
+        "selector": "0xab700a1b"
+      },
+      {
+        "args": [
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "docs": [
+          " Mint a `value` amount of `token_id` tokens.",
+          "",
+          " It is assumed that the token has already been `create`-ed. The newly minted supply will",
+          " be assigned to the caller (a.k.a the minter).",
+          "",
+          " Note that as implemented anyone can mint tokens. If you were to deploy this to a",
+          " production environment you'd probably want to lock down the addresses that are allowed",
+          " to mint tokens."
+        ],
+        "mutates": true,
+        "name": [
+          "mint"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 22
+        },
+        "selector": "0xcfdd9aa2"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_ownership"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Option"
+          ],
+          "type": 24
+        },
+        "selector": "0x88c150ad"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "renounce_ownership"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x8c90065b"
+      },
+      {
+        "args": [
+          {
+            "name": "new_owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "transfer_ownership"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x107e33ea"
+      },
+      {
+        "args": [
+          {
+            "name": "new_base_uri",
+            "type": {
+              "displayName": [
+                "Option"
+              ],
+              "type": 20
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "set_base_uri"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 22
+        },
+        "selector": "0xec403dee"
+      },
+      {
+        "args": [
+          {
+            "name": "from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 25
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "IErc1155",
+          "safe_transfer_from"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 22
+        },
+        "selector": "0xe7e2b16f"
+      },
+      {
+        "args": [
+          {
+            "name": "from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "token_ids",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          },
+          {
+            "name": "values",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          },
+          {
+            "name": "data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 25
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "IErc1155",
+          "safe_batch_transfer_from"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 22
+        },
+        "selector": "0xca374cdf"
+      },
+      {
+        "args": [
+          {
+            "name": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "IErc1155",
+          "balance_of"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Balance"
+          ],
+          "type": 7
+        },
+        "selector": "0x6e79dd12"
+      },
+      {
+        "args": [
+          {
+            "name": "owners",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 27
+            }
+          },
+          {
+            "name": "token_ids",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "IErc1155",
+          "balance_of_batch"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 26
+        },
+        "selector": "0x13891b42"
+      },
+      {
+        "args": [
+          {
+            "name": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "approved",
+            "type": {
+              "displayName": [
+                "bool"
+              ],
+              "type": 28
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "IErc1155",
+          "set_approval_for_all"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 22
+        },
+        "selector": "0xc2e7b44d"
+      },
+      {
+        "args": [
+          {
+            "name": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "IErc1155",
+          "is_approved_for_all"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 28
+        },
+        "selector": "0x912ea546"
+      },
+      {
+        "args": [
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          }
+        ],
+        "docs": [
+          " @notice A distinct Uniform Resource Identifier (URI) for a given token.",
+          " @dev URIs are defined in RFC 3986.",
+          " The URI MUST point to a JSON file that conforms to the \"ERC-1155 Metadata URI JSON Schema\"."
+        ],
+        "mutates": false,
+        "name": [
+          "IERC1155Metadata",
+          "uri"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Option"
+          ],
+          "type": 20
+        },
+        "selector": "0x9e34a322"
+      },
+      {
+        "args": [
+          {
+            "name": "_operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "_from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "_token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "_value",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 7
+            }
+          },
+          {
+            "name": "_data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 25
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "IErc1155TokenReceiver",
+          "on_received"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 25
+        },
+        "selector": "0xf23a6e61"
+      },
+      {
+        "args": [
+          {
+            "name": "_operator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "_from",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "_token_ids",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          },
+          {
+            "name": "_values",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 26
+            }
+          },
+          {
+            "name": "_data",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 25
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "IErc1155TokenReceiver",
+          "on_batch_received"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 25
+        },
+        "selector": "0xbc197c81"
+      }
+    ]
+  },
+  "storage": {
+    "struct": {
+      "fields": [
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "balances"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+              "ty": 9
+            }
+          },
+          "name": "approvals"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+              "ty": 7
+            }
+          },
+          "name": "token_id_nonce"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "enum": {
+                      "dispatchKey": "0x0300000000000000000000000000000000000000000000000000000000000000",
+                      "variants": {
+                        "0": {
+                          "fields": [
+                            {
+                              "layout": {
+                                "cell": {
+                                  "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+                                  "ty": 4
+                                }
+                              },
+                              "name": null
+                            }
+                          ]
+                        },
+                        "1": {
+                          "fields": []
+                        }
+                      }
+                    }
+                  },
+                  "name": "owner"
+                }
+              ]
+            }
+          },
+          "name": "ownable"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+                              "ty": 14
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
+                                      "ty": 15
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                                          "ty": 16
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0600000000000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                          "ty": 18
+                        }
+                      },
+                      "offset": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "creators"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                              "ty": 14
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0700000001000000000000000000000000000000000000000000000000000000",
+                                      "ty": 15
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                                          "ty": 16
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0800000001000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
+                          "ty": 19
+                        }
+                      },
+                      "offset": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "token_uris"
+        },
+        {
+          "layout": {
+            "enum": {
+              "dispatchKey": "0x0800000002000000000000000000000000000000000000000000000000000000",
+              "variants": {
+                "0": {
+                  "fields": [
+                    {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0900000002000000000000000000000000000000000000000000000000000000",
+                          "ty": 21
+                        }
+                      },
+                      "name": null
+                    }
+                  ]
+                },
+                "1": {
+                  "fields": []
+                }
+              }
+            }
+          },
+          "name": "base_uri"
+        }
+      ]
+    }
+  },
+  "types": [
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 8,
+              "typeName": "[(K, V)]"
+            }
+          ]
+        }
+      },
+      "params": [
+        2
+      ],
+      "path": [
+        "BTreeMap"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          3,
+          7
+        ]
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          4,
+          7
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 5,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "AccountId"
+      ]
+    },
+    {
+      "def": {
+        "array": {
+          "len": 32,
+          "type": 6
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u8"
+      }
+    },
+    {
+      "def": {
+        "primitive": "u128"
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 2
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 13,
+              "typeName": "[(K, V)]"
+            }
+          ]
+        }
+      },
+      "params": [
+        10
+      ],
+      "path": [
+        "BTreeMap"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          11,
+          12
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "owner",
+              "type": 4,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "operator",
+              "type": 4,
+              "typeName": "AccountId"
+            }
+          ]
+        }
+      },
+      "path": [
+        "entity",
+        "entity",
+        "Approval"
+      ]
+    },
+    {
+      "def": {
+        "tuple": []
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 10
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "last_vacant",
+              "type": 15,
+              "typeName": "Index"
+            },
+            {
+              "name": "len",
+              "type": 15,
+              "typeName": "u32"
+            },
+            {
+              "name": "len_entries",
+              "type": 15,
+              "typeName": "u32"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Header"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "u32"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 17,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 7,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        7
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "next",
+              "type": 15,
+              "typeName": "Index"
+            },
+            {
+              "name": "prev",
+              "type": 15,
+              "typeName": "Index"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "VacantEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 4,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 15,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        4
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 20,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 15,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        20
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "name": "None"
+            },
+            {
+              "fields": [
+                {
+                  "type": 21,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Some"
+            }
+          ]
+        }
+      },
+      "params": [
+        21
+      ],
+      "path": [
+        "Option"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "str"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 12,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Ok"
+            },
+            {
+              "fields": [
+                {
+                  "type": 23,
+                  "typeName": "E"
+                }
+              ],
+              "name": "Err"
+            }
+          ]
+        }
+      },
+      "params": [
+        12,
+        23
+      ],
+      "path": [
+        "Result"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "UnexistentToken"
+            },
+            {
+              "discriminant": 1,
+              "name": "ZeroAmountMint"
+            },
+            {
+              "discriminant": 2,
+              "name": "ZeroAddressTransfer"
+            },
+            {
+              "discriminant": 3,
+              "name": "NotApproved"
+            },
+            {
+              "discriminant": 4,
+              "name": "InsufficientBalance"
+            },
+            {
+              "discriminant": 5,
+              "name": "SelfApproval"
+            },
+            {
+              "discriminant": 6,
+              "name": "BatchTransferMismatch"
+            },
+            {
+              "discriminant": 7,
+              "name": "NotContractOwner"
+            },
+            {
+              "discriminant": 8,
+              "name": "NotTokenCreator"
+            }
+          ]
+        }
+      },
+      "path": [
+        "trait_erc1155",
+        "erc1155",
+        "types",
+        "Error"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "name": "None"
+            },
+            {
+              "fields": [
+                {
+                  "type": 4,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Some"
+            }
+          ]
+        }
+      },
+      "params": [
+        4
+      ],
+      "path": [
+        "Option"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 6
+        }
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 7
+        }
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 4
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "bool"
+      }
+    }
+  ]
+}

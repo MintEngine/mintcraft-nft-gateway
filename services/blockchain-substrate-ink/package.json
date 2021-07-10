@@ -13,8 +13,11 @@
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@polkadot/api": "^4.15.1",
-    "@polkadot/api-contract": "^4.15.1"
+    "@polkadot/api": "^4.17.1",
+    "@polkadot/api-contract": "^4.17.1",
+    "@polkadot/types": "^4.17.1",
+    "@polkadot/util": "^6.11.1",
+    "@polkadot/util-crypto": "^6.11.1"
   },
   "devDependencies": {
     "@types/node": "^14.0.0",

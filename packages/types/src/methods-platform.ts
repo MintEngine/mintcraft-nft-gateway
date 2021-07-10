@@ -14,6 +14,12 @@ interface ArgsWithPlatform {
   contract: string
 }
 
+export interface ResultTrxBuilt {
+  unsignedRawHex: string
+  signingPayload?: string
+  signatureOptions?: object
+}
+
 export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithPlatform {
   /** nft creator who own the nft at first */
   creator: string
