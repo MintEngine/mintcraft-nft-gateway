@@ -49,10 +49,24 @@ export interface ArgsSendTrx extends ParsedArgs, ArgsWithPlatform {
   signed?: SignedData[]
 }
 
-export interface ResultTrxSent {
+/**
+ * basic transaction data
+ */
+interface TrxBasics {
   txid: string
   blockHash?: string
   blockNumber?: number
 }
 
-export type ArgsQueryTrx = ResultTrxSent & ParsedArgs & ArgsWithPlatform
+export interface ResultTrxSent extends TrxBasics { }
+
+export interface ArgsQueryTrx extends ParsedArgs, ArgsWithPlatform {
+  txid: string
+  'ref-block-hash'?: string
+  'ref-block-number'?: number
+}
+
+export interface ResultQueryTrx extends TrxBasics {
+  content: any
+  receipt?: any
+}

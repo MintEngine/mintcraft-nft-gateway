@@ -1,12 +1,13 @@
 import _ from 'lodash'
 import { IConfig } from 'config'
-import { ApiPromise, WsProvider } from '@polkadot/api'
-import type { Signer, SignerResult } from '@polkadot/api/types'
-import type { Header, SignedBlock } from '@polkadot/types/interfaces'
-import type { AnyJson, SignerPayloadRaw, SignatureOptions, IExtrinsic } from '@polkadot/types/types'
-import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types'
 import { hexToU8a } from '@polkadot/util'
 import { blake2AsHex } from '@polkadot/util-crypto'
+import { ApiPromise, WsProvider } from '@polkadot/api'
+import type { Signer, SignerResult } from '@polkadot/api/types'
+import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types'
+import type { Vec } from '@polkadot/types'
+import type { BlockHash, EventRecord, Header, SignedBlock } from '@polkadot/types/interfaces'
+import type { AnyJson, SignerPayloadRaw, SignatureOptions, IExtrinsic } from '@polkadot/types/types'
 import Logger from '@jadepool/logger'
 import { BaseService } from '@jadepool/types'
 import { JadePool } from '@jadepool/instance'
@@ -145,7 +146,7 @@ class Service extends BaseService {
    * wrap timeout for promise
    * @param promise
    */
-  async _wrapPromiseRequest<T> (promise: Promise<T>): Promise<T> {
+  private async _wrapPromiseRequest<T> (promise: Promise<T>): Promise<T> {
     const timeout = 5000 // 5 seconds
     return await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
@@ -163,6 +164,13 @@ class Service extends BaseService {
   async getAccountNextNonce (api: ApiPromise, address: string): Promise<number> {
     const nonce = await this._wrapPromiseRequest(api.rpc.system.accountNextIndex(address))
     return nonce.toNumber()
+  }
+
+  /**
+   * get block hash by block number
+   */
+  async getBlockHash (api: ApiPromise, num: number): Promise<BlockHash> {
+    return await this._wrapPromiseRequest(api.rpc.chain.getBlockHash(num))
   }
 
   /**
@@ -187,6 +195,13 @@ class Service extends BaseService {
   async getBlockHeader (api: ApiPromise, hash?: number | string): Promise<Header> {
     const signedBlock = await this.getBlock(api, hash)
     return signedBlock.block.header
+  }
+
+  /**
+   * block events
+   */
+  async getBlockEvents (api: ApiPromise, hash: string | BlockHash): Promise<Vec<EventRecord>> {
+    return await this._wrapPromiseRequest(api.query.system.events.at(hash))
   }
 
   /**

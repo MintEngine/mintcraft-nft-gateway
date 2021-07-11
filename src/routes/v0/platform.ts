@@ -15,8 +15,8 @@ const platformRouter = new Router()
       itemType: 'object',
       rule: {
         unsignedRawHex: { type: 'string', required: true },
-        signature: { type: 'string', required: true },
         signingPayload: { type: 'string', required: false },
+        signature: { type: 'string', required: true },
         recoveryId: { type: 'number', required: false } // optional, ecdsa recovery id
       }
     }
@@ -27,9 +27,10 @@ const platformRouter = new Router()
     params: { type: 'array', required: false, min: 0 }
   }))
 // get transaction basic infomation
-  .get('/tx/:txid', buildHandler('platform-query-transaction', METHOD_NAMESPACE.BLOCKCHAIN))
-// get transaction detail infomation (not supported for all platforms)
-  .get('/tx/:txid/detail', buildHandler('platform-query-transaction-detail', METHOD_NAMESPACE.BLOCKCHAIN))
+  .get('/tx/:txid', buildHandler('platform-query-transaction', METHOD_NAMESPACE.BLOCKCHAIN, {
+    'ref-block-number': { type: 'int', convertType: 'int', required: false, min: 1 },
+    'ref-block-hash': { type: 'string', required: false, empty: false }
+  }))
 // platform summary info
   .get('/', buildHandler('platform-query-info', METHOD_NAMESPACE.BLOCKCHAIN))
 
