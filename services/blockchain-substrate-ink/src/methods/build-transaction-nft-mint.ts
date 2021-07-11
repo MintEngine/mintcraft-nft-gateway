@@ -1,6 +1,6 @@
-import { ArgsBuildTxMint, ResultTrxBuilt } from '@mintcraft/types'
+import type { ArgsBuildTxMint, ResultTrxBuilt } from '@mintcraft/types'
 
-import buildContext from './invoke-utils/build-context'
+import buildContractContext from './invoke-utils/build-contract-context'
 
 /**
  * method implement
@@ -9,7 +9,7 @@ import buildContext from './invoke-utils/build-context'
  */
 export = async (namespace: string, args: ArgsBuildTxMint): Promise<ResultTrxBuilt> => {
   // build contract context
-  const { substrateSrv, api, contract } = await buildContext(namespace, args)
+  const { substrateSrv, api, contract } = await buildContractContext(namespace, args)
 
   // contract parameters
   const initialSupply = args.initialSupply ?? 1

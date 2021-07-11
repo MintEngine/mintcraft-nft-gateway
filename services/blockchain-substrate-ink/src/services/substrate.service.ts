@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { IConfig } from 'config'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import type { Signer, SignerResult } from '@polkadot/api/types'
-import type { Hash, Header, SignedBlock } from '@polkadot/types/interfaces'
+import type { Header, SignedBlock } from '@polkadot/types/interfaces'
 import type { AnyJson, SignerPayloadRaw, SignatureOptions, IExtrinsic } from '@polkadot/types/types'
 import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types'
 import { hexToU8a } from '@polkadot/util'
@@ -10,7 +10,7 @@ import { blake2AsHex } from '@polkadot/util-crypto'
 import Logger from '@jadepool/logger'
 import { BaseService } from '@jadepool/types'
 import { JadePool } from '@jadepool/instance'
-import { PLATFORMS, PLATFORM_CHAINIDS, ResultTrxBuilt } from '@mintcraft/types'
+import { PLATFORMS, PLATFORM_CHAINIDS, ResultTrxBuilt, ResultTrxSent, SignedData } from '@mintcraft/types'
 
 const logger = Logger.of('Service', 'Substrate')
 
@@ -142,10 +142,26 @@ class Service extends BaseService {
   }
 
   /**
+   * wrap timeout for promise
+   * @param promise
+   */
+  async _wrapPromiseRequest<T> (promise: Promise<T>): Promise<T> {
+    const timeout = 5000 // 5 seconds
+    return await new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(new Error('request timeout.'))
+      }, timeout)
+      promise.then(resolve).catch(reject).finally(() => {
+        clearTimeout(timeoutId)
+      })
+    })
+  }
+
+  /**
    * get nonce
    */
   async getAccountNextNonce (api: ApiPromise, address: string): Promise<number> {
-    const nonce = await api.rpc.system.accountNextIndex(address)
+    const nonce = await this._wrapPromiseRequest(api.rpc.system.accountNextIndex(address))
     return nonce.toNumber()
   }
 
@@ -155,12 +171,12 @@ class Service extends BaseService {
   async getBlock (api: ApiPromise, hash?: number | string): Promise<SignedBlock> {
     let signedBlock: SignedBlock
     if (hash === undefined) {
-      signedBlock = await api.rpc.chain.getBlock()
+      signedBlock = await this._wrapPromiseRequest(api.rpc.chain.getBlock())
     } else if (typeof hash === 'number') {
-      const hashStr = await api.rpc.chain.getBlockHash(hash)
-      signedBlock = await api.rpc.chain.getBlock(hashStr)
+      const hashStr = await this._wrapPromiseRequest(api.rpc.chain.getBlockHash(hash))
+      signedBlock = await this._wrapPromiseRequest(api.rpc.chain.getBlock(hashStr))
     } else {
-      signedBlock = await api.rpc.chain.getBlock(hash)
+      signedBlock = await this._wrapPromiseRequest(api.rpc.chain.getBlock(hash))
     }
     return signedBlock
   }
@@ -206,16 +222,58 @@ class Service extends BaseService {
     }
   }
 
-  async sumbitTransaction (api: ApiPromise, extrinsic: IExtrinsic | string): Promise<Hash> {
-    let decodeExtrinsic: IExtrinsic
-    if (typeof extrinsic === 'string') {
-      let rawHex = extrinsic
-      if (!rawHex.startsWith('0x')) rawHex = '0x' + rawHex
-      decodeExtrinsic = api.registry.createType('Extrinsic', hexToU8a(rawHex), { isSigned: true, version: api.extrinsicVersion })
-    } else {
-      decodeExtrinsic = extrinsic
+  /**
+   * decode extrinsic with signature
+   * @param api
+   * @param unsignedRawHex should be the result of buildUnsignedExtrinsic method, which is the hex string with a fake signature
+   * @param signature signature hex
+   */
+  decodeExtrinsic (api: ApiPromise, unsignedRawHex: string, signingData?: Partial<SignedData>): IExtrinsic {
+    if (!unsignedRawHex.startsWith('0x')) unsignedRawHex = '0x' + unsignedRawHex
+    const decodedExtrinsic = api.registry.createType('Extrinsic', hexToU8a(unsignedRawHex), { isSigned: true, version: api.extrinsicVersion })
+    // sender should be signer
+    const sender = decodedExtrinsic.signer
+    if (_.isEmpty(sender)) throw new Error('missing signer after parsing unsignedRawHex.')
+    // now replace the right signature into the extrinsic
+    if (signingData !== undefined) {
+      if (signingData.signature === undefined) throw new Error('missing signature.')
+      if (signingData.signingPayload === undefined) throw new Error('missing signing payload.')
+      // FIXME: we should ensure signature is signed by sender
+      // FIXME: we should ensure signingPayload is the payload for unsignedRawHex or create payload by unsignedRawHex
+      const payload = api.registry.createType('ExtrinsicPayload', hexToU8a(signingData.signingPayload), { version: api.extrinsicVersion })
+      decodedExtrinsic.addSignature(sender, signingData.signature, payload.toU8a())
     }
-    return await api.rpc.author.submitExtrinsic(decodeExtrinsic)
+    return decodedExtrinsic
+  }
+
+  /**
+   * sumbit transaction to blockchain
+   */
+  async sumbitTransaction (api: ApiPromise, extrinsic: IExtrinsic | string): Promise<ResultTrxSent> {
+    let decodedExtrinsic: IExtrinsic
+    if (typeof extrinsic === 'string') {
+      decodedExtrinsic = this.decodeExtrinsic(api, extrinsic)
+    } else {
+      decodedExtrinsic = extrinsic
+    }
+
+    return await this._wrapPromiseRequest(new Promise((resolve, reject) => {
+      api.rpc.author.submitAndWatchExtrinsic(decodedExtrinsic, async (status) => {
+        if (status.isInvalid) { return reject(new Error('invalid extrinsic')) }
+        if (status.isDropped) { return reject(new Error('dropped extrinsic')) }
+        if (!status.isFinalized && !status.isInBlock) return
+        // get block hash
+        const blockHash = status.isInBlock ? status.asInBlock : status.asFinalized
+        // get block number
+        const header = await api.rpc.chain.getHeader(blockHash)
+        // final return
+        resolve({
+          txid: decodedExtrinsic.hash.toHex(),
+          blockHash: blockHash.toHex(),
+          blockNumber: header.number.unwrap().toNumber()
+        })
+      }).catch(reject)
+    }))
   }
 }
 

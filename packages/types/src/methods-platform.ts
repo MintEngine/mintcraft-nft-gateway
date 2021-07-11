@@ -10,18 +10,22 @@ export interface ArgsWithPlatform {
   platform: string
   /** platform chain id argument */
   chainId: string
+}
+
+export interface ArgsWithContract extends ArgsWithPlatform {
   /** contract address or name argument */
   contract: string
 }
 
-interface UnsignedData {
+export interface UnsignedData {
   unsignedRawHex: string
   signingPayload?: string
   signatureOptions?: object
 }
 
-interface SignedData {
+export interface SignedData {
   unsignedRawHex: string
+  signingPayload?: string
   signature: string
   recoveryId?: number
 }
@@ -31,7 +35,7 @@ export interface ResultTrxBuilt {
   transactions: UnsignedData[]
 }
 
-export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithPlatform {
+export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithContract {
   /** nft creator who own the nft at first */
   creator: string
   /** nft metadata url (now only support ipfs or swarm) */
@@ -40,7 +44,15 @@ export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithPlatform {
   initialSupply?: number
 }
 
-export interface ArgsSendTrx extends ParsedArgs, ArgsWithPlatform{
+export interface ArgsSendTrx extends ParsedArgs, ArgsWithPlatform {
   rawHex?: string
   signed?: SignedData[]
 }
+
+export interface ResultTrxSent {
+  txid: string
+  blockHash?: string
+  blockNumber?: number
+}
+
+export type ArgsQueryTrx = ResultTrxSent & ParsedArgs & ArgsWithPlatform
