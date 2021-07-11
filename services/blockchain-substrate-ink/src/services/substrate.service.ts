@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { IConfig } from 'config'
+import type { IConfig } from 'config'
 import { hexToU8a } from '@polkadot/util'
 import { blake2AsHex } from '@polkadot/util-crypto'
 import { ApiPromise, WsProvider } from '@polkadot/api'
@@ -10,7 +10,7 @@ import type { BlockHash, EventRecord, Header, SignedBlock } from '@polkadot/type
 import type { AnyJson, SignerPayloadRaw, SignatureOptions, IExtrinsic } from '@polkadot/types/types'
 import Logger from '@jadepool/logger'
 import { BaseService } from '@jadepool/types'
-import { JadePool } from '@jadepool/instance'
+import type { JadePool } from '@jadepool/instance'
 import { PLATFORMS, PLATFORM_CHAINIDS, ResultTrxBuilt, ResultTrxSent, SignedData } from '@mintcraft/types'
 
 const logger = Logger.of('Service', 'Substrate')

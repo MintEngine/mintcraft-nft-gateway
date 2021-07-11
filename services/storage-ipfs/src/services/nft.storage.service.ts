@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import { IConfig } from 'config'
+import type { IConfig } from 'config'
 import { NFTStorage } from 'nft.storage'
 import { BaseService } from '@jadepool/types'
-import { JadePool } from '@jadepool/instance'
+import type { JadePool } from '@jadepool/instance'
 import Logger from '@jadepool/logger'
 
 const logger = Logger.of('Service', 'Nft Storage')
