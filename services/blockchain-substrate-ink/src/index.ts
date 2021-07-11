@@ -16,6 +16,9 @@ async function run (): Promise<void> {
   const opts: SocketIOWorkerOptions = { namespaces: [PLATFORMS.SUBSTRATE_INK] }
   await jadepool.registerService(consts.SERVICE_NAMES.SIO_WORKER, opts)
 
+  // register substrate instance
+  await jadepool.registerService('substrate')
+
   logger.diff('Launcher').log('Started!')
 }
 

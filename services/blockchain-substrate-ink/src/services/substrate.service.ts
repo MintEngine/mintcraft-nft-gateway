@@ -2,9 +2,10 @@ import _ from 'lodash'
 import { IConfig } from 'config'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import type { Signer, SignerResult } from '@polkadot/api/types'
-import type { Header, SignedBlock } from '@polkadot/types/interfaces'
-import type { AnyJson, SignerPayloadRaw, SignatureOptions } from '@polkadot/types/types'
+import type { Hash, Header, SignedBlock } from '@polkadot/types/interfaces'
+import type { AnyJson, SignerPayloadRaw, SignatureOptions, IExtrinsic } from '@polkadot/types/types'
 import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types'
+import { hexToU8a } from '@polkadot/util'
 import { blake2AsHex } from '@polkadot/util-crypto'
 import Logger from '@jadepool/logger'
 import { BaseService } from '@jadepool/types'
@@ -203,6 +204,18 @@ class Service extends BaseService {
         { unsignedRawHex, signingPayload }
       ]
     }
+  }
+
+  async sumbitTransaction (api: ApiPromise, extrinsic: IExtrinsic | string): Promise<Hash> {
+    let decodeExtrinsic: IExtrinsic
+    if (typeof extrinsic === 'string') {
+      let rawHex = extrinsic
+      if (!rawHex.startsWith('0x')) rawHex = '0x' + rawHex
+      decodeExtrinsic = api.registry.createType('Extrinsic', hexToU8a(rawHex), { isSigned: true, version: api.extrinsicVersion })
+    } else {
+      decodeExtrinsic = extrinsic
+    }
+    return await api.rpc.author.submitExtrinsic(decodeExtrinsic)
   }
 }
 

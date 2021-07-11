@@ -5,7 +5,7 @@ import { ParsedArgs } from './methods-shared'
 
 // ------- interface -------
 //
-interface ArgsWithPlatform {
+export interface ArgsWithPlatform {
   /** platform argument */
   platform: string
   /** platform chain id argument */

@@ -1,8 +1,6 @@
-import _ from 'lodash'
-import jadepool from '@jadepool/instance'
 import { ArgsBuildTxMint, ResultTrxBuilt } from '@mintcraft/types'
-import { ContractPromise } from '@polkadot/api-contract'
-import SubstrateSrv from '../services/substrate.service'
+
+import buildContext from './invoke-utils/build-context'
 
 /**
  * method implement
@@ -10,16 +8,8 @@ import SubstrateSrv from '../services/substrate.service'
  * @param args
  */
 export = async (namespace: string, args: ArgsBuildTxMint): Promise<ResultTrxBuilt> => {
-  if (_.isEmpty(args.chainId)) throw new Error('invalid args: missing chain id.')
-  if (_.isEmpty(args.contract)) throw new Error('invalid args: missing contract.')
-
-  const substrateSrv = jadepool.getService('substrate') as SubstrateSrv
-  // get contract defination
-  const define = substrateSrv.ensureContractSupported(args.contract)
-  // get api promise
-  const api = await substrateSrv.getApiPromise(args.chainId)
-  // get contract instance
-  const contract = new ContractPromise(api, define.abi, define.address)
+  // build contract context
+  const { substrateSrv, api, contract } = await buildContext(namespace, args)
 
   // contract parameters
   const initialSupply = args.initialSupply ?? 1
