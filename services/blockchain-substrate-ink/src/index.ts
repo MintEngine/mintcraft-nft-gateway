@@ -5,7 +5,7 @@ import { SocketIOWorkerOptions } from '@jadepool/service-socketio'
 import { PLATFORMS } from '@mintcraft/types'
 import Context from './context'
 
-const logger = Logger.of('Mintcraft', 'Substrate Ink!')
+const logger = Logger.of('Mintcraft', 'Substrate ink!')
 
 async function run (): Promise<void> {
   logger.diff('Launcher').log('Run!')

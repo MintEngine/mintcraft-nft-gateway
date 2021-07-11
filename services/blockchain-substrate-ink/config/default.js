@@ -1,4 +1,5 @@
 // const fs = require('fs')
+// const path = require('path')
 
 module.exports = {
   logLevel: 'INFO',
@@ -20,7 +21,7 @@ module.exports = {
     //   category: 'nft|token'
     //   symbol?: '<token symbol>',
     //   address: '<address>',
-    //   abi: JSON.parse(fs.readFileSync('./abis/metadata.json'))
+    //   abi: JSON.parse(fs.readFileSync(path.resolve(__dirname, './abis/metadata.json')))
     // }
   ]
 }
