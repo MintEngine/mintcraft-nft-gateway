@@ -6,8 +6,19 @@ import { buildHandler } from '../factory'
 
 const platformRouter = new Router()
 // send raw transcation data
-  .post('/send-rawtx', buildHandler('platform-send-rawtx', METHOD_NAMESPACE.BLOCKCHAIN, {
-    rawtx: { type: 'string', required: true }
+  .post('/send-trx', buildHandler('platform-send-transaction', METHOD_NAMESPACE.BLOCKCHAIN, {
+    // weither rawHex string or signed array
+    rawHex: { type: 'string', required: false },
+    signed: {
+      type: 'array',
+      required: false,
+      itemType: 'object',
+      rule: {
+        unsignedRawHex: { type: 'string', required: true },
+        signature: { type: 'string', required: true },
+        recoveryId: { type: 'number', required: false } // optional, ecdsa recovery id
+      }
+    }
   }))
 // platform call for more information (not to send transaction)
   .post('/call', buildHandler('platform-general-call', METHOD_NAMESPACE.BLOCKCHAIN, {

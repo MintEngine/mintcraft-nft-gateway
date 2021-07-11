@@ -198,8 +198,10 @@ class Service extends BaseService {
     const signedFaked = await extrinsic.signAsync(sender, options)
     const signingPayload = signedFaked.signature.toHex()
     return {
-      unsignedRawHex,
-      signingPayload
+      sender,
+      transactions: [
+        { unsignedRawHex, signingPayload }
+      ]
     }
   }
 }

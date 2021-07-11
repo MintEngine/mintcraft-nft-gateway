@@ -14,10 +14,21 @@ interface ArgsWithPlatform {
   contract: string
 }
 
-export interface ResultTrxBuilt {
+interface UnsignedData {
   unsignedRawHex: string
   signingPayload?: string
   signatureOptions?: object
+}
+
+interface SignedData {
+  unsignedRawHex: string
+  signature: string
+  recoveryId?: number
+}
+
+export interface ResultTrxBuilt {
+  sender: string
+  transactions: UnsignedData[]
 }
 
 export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithPlatform {
@@ -27,4 +38,9 @@ export interface ArgsBuildTxMint extends ParsedArgs, ArgsWithPlatform {
   metadata: string
   /** nft initial supply (erc721 should be always 1) */
   initialSupply?: number
+}
+
+export interface ArgsSendTrx extends ParsedArgs, ArgsWithPlatform{
+  rawHex?: string
+  signed?: SignedData[]
 }
