@@ -178,14 +178,13 @@ class Service extends BaseService {
   async buildUnsignedExtrinsic (api: ApiPromise, sender: string, extrinsic: SubmittableExtrinsic<'promise'>, mortalBlocks: number = 64): Promise<ResultTrxBuilt> {
     const senderAddressNonce = await this.getAccountNextNonce(api, sender)
     const header = await this.getBlockHeader(api)
-    const blocks = 64 // default mortal blocks is 64
 
     // add signing data
     const options: SignatureOptions = {
       blockHash: header.hash,
       era: api.registry.createType('ExtrinsicEra', {
         current: header.number,
-        period: blocks
+        period: mortalBlocks // default mortal blocks is 64
       }),
       nonce: senderAddressNonce,
       genesisHash: api.genesisHash,
