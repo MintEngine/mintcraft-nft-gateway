@@ -63,7 +63,8 @@ async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, o
   }
   // 若存在 file，则设置 fileInfo
   if (ctx.request.file !== undefined || ctx.request.files !== undefined) {
-    const files = ctx.request.file !== undefined ? [ctx.request.file] : ctx.request.files
+    let files = ctx.request.file !== undefined ? [ctx.request.file] : ctx.request.files
+    if (!_.isArray(files)) { files = [files] }
     // 仅提取要素
     autoData.files = files.map(one => _.pick(one, ['fieldname', 'originalname', 'encoding', 'mimetype', 'size', 'destination', 'filename', 'path', 'buffer']))
   }
