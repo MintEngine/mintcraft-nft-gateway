@@ -20,7 +20,7 @@
     "@jadepool/logger": "^2.0.3",
     "@jadepool/service-consul": "^1.0.0-alpha.4",
     "@jadepool/service-http": "^1.0.0-alpha.6",
-    "@jadepool/service-socketio": "^1.0.0-alpha.3",
+    "@jadepool/service-socketio": "^1.0.0-alpha.5",
     "@jadepool/types": "^1.0.0-alpha.2",
     "@koa/multer": "^3.0.0",
     "@koa/router": "^10.0.0",

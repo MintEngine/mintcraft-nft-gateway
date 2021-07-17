@@ -74,17 +74,6 @@
     lodash "^4.17.21"
     require-fool-webpack "^2.0.0"
 
-"@jadepool/instance@^1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@jadepool/instance/-/instance-1.0.0-alpha.9.tgz#be5210db3ec296e9ec00d12afb96cd825ebc598f"
-  integrity sha512-4sqyDTcAYTjSlzN7pppDx/Tk/n0uSdKGFxivSuPwqoFrkgEWIuC8anGNuaFVFp0KUfmmJxm/toqkPUOSBZi3TA==
-  dependencies:
-    "@jadepool/env" "^1.0.0-alpha.0"
-    "@jadepool/logger" "^2.0.3"
-    "@jadepool/types" "^1.0.0-alpha.2"
-    lodash "^4.17.21"
-    require-fool-webpack "^2.0.0"
-
 "@jadepool/logger@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@jadepool/logger/-/logger-2.0.3.tgz#176dc322848059ad45a8f1dae465862d4eda5740"
@@ -126,13 +115,13 @@
     lodash "^4.17.21"
     morgan "^1.10.0"
 
-"@jadepool/service-socketio@^1.0.0-alpha.3":
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@jadepool/service-socketio/-/service-socketio-1.0.0-alpha.3.tgz#c43cb714d45adf3c099d62a8a9e2ba38f5b8bb8b"
-  integrity sha512-pPTqwwDAEGKAELQRR60g+wgN+HXUo9DLOfFcaE2+kz2Ku7gjbR+0Z7UDNduxmm6/X1CQ+cqYjHYMNuFlo7mqzw==
+"@jadepool/service-socketio@^1.0.0-alpha.5":
+  version "1.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@jadepool/service-socketio/-/service-socketio-1.0.0-alpha.5.tgz#28eead2ac11e6096cfa35ecfd3f3658844ecd27d"
+  integrity sha512-85iW2Ec93BCjIselRg1pMTnENgqUerQO/rQl4XBw/xa+fD0W3NJOaG8E0wkaIC0qHZhouXA5wqRs3rae+0xCtg==
   dependencies:
     "@jadepool/consts" "^1.0.0-alpha.0"
-    "@jadepool/instance" "^1.0.0-alpha.9"
+    "@jadepool/instance" "^1.0.0-alpha.11"
     "@jadepool/logger" "^2.0.3"
     "@jadepool/types" "^1.0.0-alpha.2"
     "@jadepool/utils-crypto" "1.0.0-alpha.0"
