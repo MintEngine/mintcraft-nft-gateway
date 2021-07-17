@@ -10,8 +10,11 @@ import {
   ResultEntityUploaded,
   NFTMetadata
 } from '@mintcraft/types'
+import Logger from '@jadepool/logger'
 
 import NFTStorageServ from '../services/nft.storage.service'
+
+const logger = Logger.of('Methods', 'Upload NFT')
 
 /**
  * method implement
@@ -89,6 +92,8 @@ export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntity
       }
     }
   }))
+
+  logger.tag('Uploaded').log(JSON.stringify(metadata))
 
   return {
     hashId: metadata.ipnft,
