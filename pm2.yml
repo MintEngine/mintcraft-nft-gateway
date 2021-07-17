@@ -1,0 +1,27 @@
+apps:
+  - cwd: ./
+    name: mintcraft-master
+    script: src/index.ts
+    interpreter: "yarn"
+    interpreter_args: start
+    exec_mode: "fork"
+    watch: false
+    kill_timeout: 60000
+
+  - cwd: ./services/blockchain-substrate-ink
+    name: mintcraft-blockchain-substrate-ink
+    script: src/index.ts
+    interpreter: "yarn"
+    interpreter_args: start
+    exec_mode: "fork"
+    watch: false
+    kill_timeout: 60000
+
+  - cwd: ./services/storage-ipfs
+    name: mintcraft-storage-ipfs
+    script: src/index.ts
+    interpreter: "yarn"
+    interpreter_args: start
+    exec_mode: "fork"
+    watch: false
+    kill_timeout: 60000
