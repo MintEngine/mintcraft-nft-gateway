@@ -45,7 +45,7 @@ export interface MintcraftAssetMeta {
   /** content url field */
   content: string
   /** content type */
-  content_type: 'fbx' | 'obj'
+  content_type: string
 }
 
 export interface MintcraftAssetProperty {
