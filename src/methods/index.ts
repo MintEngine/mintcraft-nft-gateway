@@ -69,7 +69,7 @@ export default async (methodName: string, namespace: string | undefined, args: P
       }
       logger.diff(callMethodKey).tag('End').logObj(args)
     } catch (err) {
-      logger.diff(callMethodKey).tag('Failed-to-invoke-RPC').warn(`method=${methodName},errMessage=${JSON.stringify(err.message)}`)
+      logger.diff(callMethodKey).tag('Failed-to-invoke-RPC').error(`method=${methodName}`, err)
       throw err
     }
   }
